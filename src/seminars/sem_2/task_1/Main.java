@@ -30,9 +30,8 @@ public class Main {
 
     public static List<String[]> readToList(String file) {
         List<String[]> result = new ArrayList<>();
-        try {
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line = "";
-            BufferedReader br = new BufferedReader(new FileReader(file));
             while ((line = br.readLine()) != null) {
                 String[] tempLine = line.split("=");
                 if (!isNum(tempLine[1]) && !tempLine[1].equals("?")) {
@@ -65,14 +64,12 @@ public class Main {
     }
 
     public static void writeToFile(List<String[]> list) {
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(PATH));
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(PATH))) {
             for (String[] item :
                     list) {
                 bw.write(item[0] + "=" + item[1]);
                 bw.newLine();
             }
-            bw.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
