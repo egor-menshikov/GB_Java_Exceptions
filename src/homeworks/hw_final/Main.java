@@ -1,5 +1,8 @@
 package homeworks.hw_final;
 
+import homeworks.hw_final.exceptions.ArraySizeException;
+import homeworks.hw_final.exceptions.WrongDataException;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -29,7 +32,8 @@ public class Main {
             else
                 sb.append(text[i]);
         }
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(text[0].toLowerCase() + ".txt", true))) {
+        try (BufferedWriter bw = new BufferedWriter(
+                new FileWriter("src\\homeworks\\hw_final\\people\\" + text[0].toLowerCase() + ".txt", true))) {
             bw.write(sb.toString());
             bw.newLine();
         }

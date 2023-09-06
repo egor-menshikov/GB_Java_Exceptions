@@ -1,4 +1,4 @@
-package homeworks.hw_final;
+package homeworks.hw_final.exceptions;
 
 public class ArraySizeException extends Throwable {
     public ArraySizeException(String[] result, int i) {
