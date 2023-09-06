@@ -1,5 +1,8 @@
 package homeworks.hw_final;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -9,26 +12,34 @@ public class Main {
     public static void main(String[] args) {
         try {
             String[] text = getUserData();
-            String s = prepareUserData(text);
-            System.out.println(s);
+            prepareUserData(text);
+            writeToFile(text);
+        } catch (IOException e) {
+            e.printStackTrace();
         } catch (ArraySizeException | WrongDataException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public static String prepareUserData(String[] text) throws WrongDataException {
-        checkNames(text[0], text[1], text[2]);
-        checkDate(text[3]);
-        checkPhone(text[4]);
-        checkGender(text[5]);
+    private static void writeToFile(String[] text) throws IOException {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < text.length; i++) {
             if (i < text.length - 1)
                 sb.append(text[i]).append(" ");
             else
-                sb.append(text[i]).append("\n");
+                sb.append(text[i]);
         }
-        return sb.toString();
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(text[0].toLowerCase() + ".txt", true))) {
+            bw.write(sb.toString());
+            bw.newLine();
+        }
+    }
+
+    public static void prepareUserData(String[] text) throws WrongDataException {
+        checkNames(text[0], text[1], text[2]);
+        checkDate(text[3]);
+        checkPhone(text[4]);
+        checkGender(text[5]);
     }
 
     private static void checkGender(String s) throws WrongDataException {
